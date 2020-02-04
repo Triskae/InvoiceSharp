@@ -123,16 +123,21 @@ namespace Invoicer2.Services.Impl
             Table table = section.AddTable();
 
             double width = section.PageWidth();
-            double productWidth = Unit.FromPoint(150);
-            double numericWidth = (width - productWidth) / (Invoice.HasDiscount ? 5 : 4);
-            table.AddColumn(productWidth);
-            table.AddColumn(ParagraphAlignment.Center, numericWidth);
-            table.AddColumn(ParagraphAlignment.Center, numericWidth);
-            table.AddColumn(ParagraphAlignment.Center, numericWidth);
-            if (Invoice.HasDiscount)
-                table.AddColumn(ParagraphAlignment.Center, numericWidth);
-            table.AddColumn(ParagraphAlignment.Center, numericWidth);
 
+            //double productWidth = Unit.FromPoint(150);
+            //double numericWidth = (width - productWidth) / this.COLUMN_TOTAL;
+
+            double numericWidth = Unit.FromPoint(100);
+            double productWidth = (width - (numericWidth * this.COLUMN_TOTAL));
+            
+
+            table.AddColumn(productWidth);
+
+            for(int i = 0; i <= this.COLUMN_TOTAL - 1; i++)
+            {
+                table.AddColumn(ParagraphAlignment.Center, numericWidth);
+            }
+            
             BillingHeader(table);
 
             foreach (ItemRow item in Invoice.Items)
@@ -161,15 +166,20 @@ namespace Invoicer2.Services.Impl
 
             row.Cells[COLUMN_PRODUCT].AddParagraph("PRODUCT", ParagraphAlignment.Left);
             row.Cells[COLUMN_QTY].AddParagraph("QTY", ParagraphAlignment.Right);
-            row.Cells[COLUMN_VATPERCENT].AddParagraph("VAT %", ParagraphAlignment.Right);
             row.Cells[COLUMN_UNITPRICE].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
+            row.Cells[COLUMN_TOTAL].AddParagraph("TOTAL", ParagraphAlignment.Right);
+
+            if (Invoice.Company.HasVatNumber)
+            {
+                row.Cells[COLUMN_VATPERCENT].AddParagraph("VAT %", ParagraphAlignment.Right);
+            }
 
             if (Invoice.HasDiscount)
             {
                 row.Cells[COLUMN_DISCOUNT].AddParagraph("DISCOUNT", ParagraphAlignment.Right);
             }
 
-            row.Cells[COLUMN_TOTAL].AddParagraph("TOTAL", ParagraphAlignment.Right);
+            
         }
 
         private void BillingRow(Table table, ItemRow item)
@@ -186,13 +196,20 @@ namespace Invoicer2.Services.Impl
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.AddParagraph(item.Quantity.ToCurrency(), ParagraphAlignment.Right, "H2-9");
 
-            cell = row.Cells[COLUMN_VATPERCENT];
-            cell.VerticalAlignment = VerticalAlignment.Center;
-            cell.AddParagraph(item.VAT.ToCurrency(), ParagraphAlignment.Right, "H2-9");
-
             cell = row.Cells[COLUMN_UNITPRICE];
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.AddParagraph(item.Price.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
+
+            cell = row.Cells[COLUMN_TOTAL];
+            cell.VerticalAlignment = VerticalAlignment.Center;
+            cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
+
+            if (Invoice.Company.HasVatNumber)
+            {
+                cell = row.Cells[COLUMN_VATPERCENT];
+                cell.VerticalAlignment = VerticalAlignment.Center;
+                cell.AddParagraph(item.VAT.ToCurrency(), ParagraphAlignment.Right, "H2-9");
+            }
 
             if (Invoice.HasDiscount)
             {
@@ -200,10 +217,6 @@ namespace Invoicer2.Services.Impl
                 cell.VerticalAlignment = VerticalAlignment.Center;
                 cell.AddParagraph(item.Discount, ParagraphAlignment.Right, "H2-9");
             }
-
-            cell = row.Cells[COLUMN_TOTAL];
-            cell.VerticalAlignment = VerticalAlignment.Center;
-            cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
         }
 
         private void BillingTotal(Table table, TotalRow total)

@@ -10,13 +10,12 @@ namespace Invoicer2.Services.Impl
 {
     public partial class PdfInvoice
     {
-        private readonly int COLUMN_PRODUCT = 0;
-        private readonly int COLUMN_QTY = 1;
-        private readonly int COLUMN_VATPERCENT = 2;
-        private readonly int COLUMN_UNITPRICE = 3;
-        private readonly int COLUMN_TOTAL = 4;
+        private readonly int COLUMN_PRODUCT = -1;
+        private readonly int COLUMN_QTY = -1;
+        private readonly int COLUMN_VATPERCENT = -1;
+        private readonly int COLUMN_UNITPRICE = -1;
+        private readonly int COLUMN_TOTAL = -1;
         private readonly int COLUMN_DISCOUNT = -1;
-        private readonly int COLUMN_TOTALLABEL = 3;
 
         public Document Pdf { get; private set; }
         public Invoice Invoice { get; private set; }
@@ -71,11 +70,27 @@ namespace Invoicer2.Services.Impl
             Pdf = new Document();
             Invoice = invoice;
 
+            this.COLUMN_PRODUCT = 0;
+            this.COLUMN_QTY = 1;
+            
+            if (invoice.Company.HasVatNumber)
+            {
+                this.COLUMN_VATPERCENT = 2;
+                this.COLUMN_UNITPRICE = 3;
+            }
+            else
+            {
+                this.COLUMN_UNITPRICE = 2;
+            }
+
             if (invoice.HasDiscount)
             {
-                this.COLUMN_DISCOUNT = 4;
-                this.COLUMN_TOTAL = 5;
-                this.COLUMN_TOTALLABEL = 4;
+                this.COLUMN_DISCOUNT = this.COLUMN_UNITPRICE + 1;
+                this.COLUMN_TOTAL = this.COLUMN_DISCOUNT + 1;
+            }
+            else
+            {
+                this.COLUMN_TOTAL = this.COLUMN_UNITPRICE + 1;
             }
         }
 
