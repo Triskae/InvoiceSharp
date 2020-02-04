@@ -44,8 +44,8 @@ namespace Invoicer2.Services.Impl
             row = subTable.AddRow();
             row.Cells[0].AddParagraph("REFERENCE:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.Reference, ParagraphAlignment.Right, "H2-9");
-            row.Cells[0].AddParagraph("BILLING DATE:", ParagraphAlignment.Left, "H2-9B-Color");
-            row.Cells[1].AddParagraph(Invoice.BillingDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
+            row.Cells[0].AddParagraph("INVOICE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[1].AddParagraph(Invoice.InvoiceDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
             row.Cells[0].AddParagraph("DUE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.DueDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
         }
@@ -164,7 +164,7 @@ namespace Invoicer2.Services.Impl
             row.TopPadding = 10;
             row.Borders.Bottom = BorderLine;
 
-            row.Cells[COLUMN_PRODUCT].AddParagraph("PRODUCT", ParagraphAlignment.Left);
+            row.Cells[COLUMN_PRODUCT].AddParagraph("DESCRIPTION", ParagraphAlignment.Left); // TODO: Was PRODUCT - can we have a setting for Product/Service invoices?
             row.Cells[COLUMN_QTY].AddParagraph("QTY", ParagraphAlignment.Right);
             row.Cells[COLUMN_UNITPRICE].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
             row.Cells[COLUMN_TOTAL].AddParagraph("TOTAL", ParagraphAlignment.Right);
@@ -264,12 +264,14 @@ namespace Invoicer2.Services.Impl
                     TextFrame frame = null;
                     foreach (string line in detail.Paragraphs)
                     {
-                        if (line == detail.Paragraphs[0])
-                        {
-                            frame = row.Cells[0].AddTextFrame();
-                            frame.Width = section.Document.PageWidth();
-                        }
-                        frame.AddParagraph(line, ParagraphAlignment.Left, "H2-9");
+                        //if (line == detail.Paragraphs[0])
+                        //{
+                        //    frame = row.Cells[0].AddTextFrame();
+                        //    frame.Width = section.Document.PageWidth();
+                        //}
+                        //frame.AddParagraph("X - " + line, ParagraphAlignment.Left, "H2-9");
+                        Paragraph name = row.Cells[0].AddParagraph();
+                        name.AddFormattedText(line, "H2-9-Grey");
                     }
                 }
             }

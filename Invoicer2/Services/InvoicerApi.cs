@@ -32,8 +32,8 @@ namespace Invoicer2.Services
             Invoice.PageSize = size;
             Invoice.PageOrientation = orientation;
             Invoice.Currency = currency;
-            Invoice.BillingDate = DateTime.Now;
-            Invoice.DueDate = Invoice.BillingDate.AddDays(14);
+            Invoice.InvoiceDate = DateTime.Now;
+            Invoice.DueDate = Invoice.InvoiceDate.AddDays(14);
             Invoice.Reference = DefaultReference;
         }
 
@@ -71,7 +71,7 @@ namespace Invoicer2.Services
 
         public IInvoicerOptions BillingDate(DateTime date)
         {
-            Invoice.BillingDate = date;
+            Invoice.InvoiceDate = date;
             return this;
         }
 

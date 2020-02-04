@@ -43,7 +43,7 @@ namespace Invoicer2.Console
                         "Vodafone Limited. Registered in England and Wales No. 1471587.",
                         "Registered office: Vodafone House, The Connection, Newbury, Berkshire RG14 2FN."
                     }))
-                .Client(Address.Make("BILLING TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
+                .Client(Address.Make("INVOICE TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
                 .Items(new List<ItemRow> {
                     ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, (decimal)199.99, (decimal)199.99),
                     ItemRow.Make("24 Months (£22.50pm)", "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal)1, (decimal)432.00, (decimal)432.00),
