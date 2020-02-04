@@ -17,7 +17,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/Invoicer2.csproj'
-    includesymbols: true
+    includesymbols: false
     versioningScheme: 'byBuildNumber'
 - task: DotNetCoreCLI@2
   inputs:
