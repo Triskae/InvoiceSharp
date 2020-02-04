@@ -9,18 +9,14 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-  
+steps: 
 - task: DotNetCoreCLI@2
+  name: 'pack'
   inputs:
     command: 'pack'
+    packagesToPack: '**/*.csproj'
+    includesymbols: true
+    versioningScheme: 'byBuildNumber'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
