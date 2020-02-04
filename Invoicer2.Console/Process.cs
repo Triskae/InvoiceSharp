@@ -23,6 +23,7 @@ namespace Invoicer2.Console
                     ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, 20, (decimal)166.66, (decimal)199.99),
                     ItemRow.Make("24 Months (£22.50pm)", "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal)1, 20, (decimal)360.00, (decimal)432.00),
                     ItemRow.Make("Special Offer", "Free case (blue)", (decimal)1, 0, (decimal)0, (decimal)0),
+                    ItemRow.Make("Test", "Testing", (decimal)1, 0, (decimal)10, "-5.00", (decimal)5),
                 })
                 .Totals(new List<TotalRow> {
                     TotalRow.Make("Sub Total", (decimal)526.66),

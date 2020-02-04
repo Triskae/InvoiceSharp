@@ -159,19 +159,17 @@ namespace Invoicer2.Services.Impl
             row.TopPadding = 10;
             row.Borders.Bottom = BorderLine;
 
-            row.Cells[0].AddParagraph("PRODUCT", ParagraphAlignment.Left);
-            row.Cells[1].AddParagraph("QTY", ParagraphAlignment.Right);
-            row.Cells[2].AddParagraph("VAT %", ParagraphAlignment.Right);
-            row.Cells[3].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
+            row.Cells[COLUMN_PRODUCT].AddParagraph("PRODUCT", ParagraphAlignment.Left);
+            row.Cells[COLUMN_QTY].AddParagraph("QTY", ParagraphAlignment.Right);
+            row.Cells[COLUMN_VATPERCENT].AddParagraph("VAT %", ParagraphAlignment.Right);
+            row.Cells[COLUMN_UNITPRICE].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
+
             if (Invoice.HasDiscount)
             {
-                row.Cells[4].AddParagraph("DISCOUNT", ParagraphAlignment.Right);
-                row.Cells[5].AddParagraph("TOTAL", ParagraphAlignment.Right);
+                row.Cells[COLUMN_DISCOUNT].AddParagraph("DISCOUNT", ParagraphAlignment.Right);
             }
-            else
-            {
-                row.Cells[4].AddParagraph("TOTAL", ParagraphAlignment.Right);
-            }
+
+            row.Cells[COLUMN_TOTAL].AddParagraph("TOTAL", ParagraphAlignment.Right);
         }
 
         private void BillingRow(Table table, ItemRow item)
@@ -180,52 +178,36 @@ namespace Invoicer2.Services.Impl
             row.Style = "TableRow";
             row.Shading.Color = MigraDocHelpers.BackColorFromHtml(Invoice.BackColor);
 
-            Cell cell = row.Cells[0];
+            Cell cell = row.Cells[COLUMN_PRODUCT];
             cell.AddParagraph(item.Name, ParagraphAlignment.Left, "H2-9B");
             cell.AddParagraph(item.Description, ParagraphAlignment.Left, "H2-9-Grey");
 
-            cell = row.Cells[1];
+            cell = row.Cells[COLUMN_QTY];
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.AddParagraph(item.Quantity.ToCurrency(), ParagraphAlignment.Right, "H2-9");
 
-            cell = row.Cells[2];
+            cell = row.Cells[COLUMN_VATPERCENT];
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.AddParagraph(item.VAT.ToCurrency(), ParagraphAlignment.Right, "H2-9");
 
-            cell = row.Cells[3];
+            cell = row.Cells[COLUMN_UNITPRICE];
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.AddParagraph(item.Price.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
 
             if (Invoice.HasDiscount)
             {
-                cell = row.Cells[4];
+                cell = row.Cells[COLUMN_DISCOUNT];
                 cell.VerticalAlignment = VerticalAlignment.Center;
                 cell.AddParagraph(item.Discount, ParagraphAlignment.Right, "H2-9");
+            }
 
-                cell = row.Cells[5];
-                cell.VerticalAlignment = VerticalAlignment.Center;
-                cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
-            }
-            else
-            {
-                cell = row.Cells[4];
-                cell.VerticalAlignment = VerticalAlignment.Center;
-                cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
-            }
+            cell = row.Cells[COLUMN_TOTAL];
+            cell.VerticalAlignment = VerticalAlignment.Center;
+            cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
         }
 
         private void BillingTotal(Table table, TotalRow total)
         {
-            if (Invoice.HasDiscount)
-            {
-                table.Columns[4].Format.Alignment = ParagraphAlignment.Left;
-                table.Columns[5].Format.Alignment = ParagraphAlignment.Left;
-            }
-            else
-            {
-                table.Columns[4].Format.Alignment = ParagraphAlignment.Left;
-            }
-
             Row row = table.AddRow();
             row.Style = "TableRow";
 
@@ -241,26 +223,13 @@ namespace Invoicer2.Services.Impl
                 shading = MigraDocHelpers.BackColorFromHtml(Invoice.BackColor);
             }
 
-            if (Invoice.HasDiscount)
-            {
-                Cell cell = row.Cells[4];
-                cell.Shading.Color = shading;
-                cell.AddParagraph(total.Name, ParagraphAlignment.Left, font);
+            Cell cell = row.Cells[Invoice.HasDiscount ? COLUMN_DISCOUNT : COLUMN_UNITPRICE];
+            cell.Shading.Color = shading;
+            cell.AddParagraph(total.Name, ParagraphAlignment.Left, font);
 
-                cell = row.Cells[5];
-                cell.Shading.Color = shading;
-                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
-            }
-            else
-            {
-                Cell cell = row.Cells[3];
-                cell.Shading.Color = shading;
-                cell.AddParagraph(total.Name, ParagraphAlignment.Left, font);
-
-                cell = row.Cells[4];
-                cell.Shading.Color = shading;
-                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
-            }
+            cell = row.Cells[COLUMN_TOTAL];
+            cell.Shading.Color = shading;
+            cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
         }
 
         private void PaymentSection()
