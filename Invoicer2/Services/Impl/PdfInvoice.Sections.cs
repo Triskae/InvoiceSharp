@@ -274,29 +274,16 @@ namespace Invoicer2.Services.Impl
                 }
             }
 
-            if (Invoice.Company.HasCompanyNumber || Invoice.Company.HasVatNumber)
+            if (Invoice.Company.HasLegalTextLines)
             {
                 row = table.AddRow();
 
                 Color shading = MigraDocHelpers.TextColorFromHtml(Invoice.TextColor);
 
-                if (Invoice.Company.HasCompanyNumber && Invoice.Company.HasVatNumber)
+                foreach (var line in Invoice.Company.LegalTextLines)
                 {
-                    row.Cells[0].AddParagraph(string.Format("Company Number: {0}, VAT Number: {1}",
-                        Invoice.Company.CompanyNumber, Invoice.Company.VatNumber),
-                        ParagraphAlignment.Center, "H2-9B-Inverse")
-                        .Format.Shading.Color = shading;
-                }
-                else
-                {
-                    if (Invoice.Company.HasCompanyNumber)
-                        row.Cells[0].AddParagraph(string.Format("Company Number: {0}", Invoice.Company.CompanyNumber),
-                        ParagraphAlignment.Center, "H2-9B-Inverse")
-                        .Format.Shading.Color = shading;
-                    else
-                        row.Cells[0].AddParagraph(string.Format("VAT Number: {0}", Invoice.Company.VatNumber),
-                        ParagraphAlignment.Center, "H2-9B-Inverse")
-                        .Format.Shading.Color = shading;
+                    row.Cells[0].AddParagraph(line, ParagraphAlignment.Center, "H2-9B-Inverse")
+                    .Format.Shading.Color = shading;
                 }
             }
         }

@@ -28,7 +28,21 @@ namespace Invoicer2.Console
                 .TextColor("#CC0000")
                 .BackColor("#FFD6CC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
-                .Company(Address.Make("FROM", new string[] { "Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN" }, "1471587", null))
+                .Company(Address.Make(
+                    "FROM", 
+                    new string[] {
+                        "Vodafone Limited",
+                        "Vodafone House",
+                        "The Connection", 
+                        "Newbury",
+                        "Berkshire RG14 2FN" 
+                }, 
+                    "1471587", 
+                    null, 
+                    new string[] {
+                        "Vodafone Limited. Registered in England and Wales No. 1471587.",
+                        "Registered office: Vodafone House, The Connection, Newbury, Berkshire RG14 2FN."
+                    }))
                 .Client(Address.Make("BILLING TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
                 .Items(new List<ItemRow> {
                     ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, (decimal)199.99, (decimal)199.99),
