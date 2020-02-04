@@ -160,7 +160,7 @@ namespace Invoicer2.Services.Impl
             row.Borders.Bottom = BorderLine;
 
             row.Cells[0].AddParagraph("PRODUCT", ParagraphAlignment.Left);
-            row.Cells[1].AddParagraph("AMOUNT", ParagraphAlignment.Right);
+            row.Cells[1].AddParagraph("QTY", ParagraphAlignment.Right);
             row.Cells[2].AddParagraph("VAT %", ParagraphAlignment.Right);
             row.Cells[3].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
             if (Invoice.HasDiscount)
@@ -186,7 +186,7 @@ namespace Invoicer2.Services.Impl
 
             cell = row.Cells[1];
             cell.VerticalAlignment = VerticalAlignment.Center;
-            cell.AddParagraph(item.Amount.ToCurrency(), ParagraphAlignment.Right, "H2-9");
+            cell.AddParagraph(item.Quantity.ToCurrency(), ParagraphAlignment.Right, "H2-9");
 
             cell = row.Cells[2];
             cell.VerticalAlignment = VerticalAlignment.Center;

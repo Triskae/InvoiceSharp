@@ -7,7 +7,7 @@ namespace Invoicer2.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal Amount { get; set; }
+        public decimal Quantity { get; set; }
         public decimal VAT { get; set; }
         public decimal Price { get; set; }
         public string Discount { get; set; }
@@ -21,18 +21,18 @@ namespace Invoicer2.Models
             }
         }
 
-        public static ItemRow Make(string name, string description, decimal amount, decimal vat, decimal price, decimal total)
+        public static ItemRow Make(string name, string description, decimal quantity, decimal vat, decimal price, decimal total)
         {
-            return Make(name, description, amount, vat, price, "", total);
+            return Make(name, description, quantity, vat, price, "", total);
         }
 
-        public static ItemRow Make(string name, string description, decimal amount, decimal vat, decimal price, string discount, decimal total)
+        public static ItemRow Make(string name, string description, decimal quantity, decimal vat, decimal price, string discount, decimal total)
         {
             return new ItemRow()
             {
                 Name = name,
                 Description = description,
-                Amount = amount,
+                Quantity = quantity,
                 VAT = vat,
                 Price = price,
                 Discount = discount,
