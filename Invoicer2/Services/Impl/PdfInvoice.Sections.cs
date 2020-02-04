@@ -160,17 +160,17 @@ namespace Invoicer2.Services.Impl
             row.Borders.Bottom = BorderLine;
 
             row.Cells[0].AddParagraph("PRODUCT", ParagraphAlignment.Left);
-            row.Cells[1].AddParagraph("AMOUNT", ParagraphAlignment.Center);
-            row.Cells[2].AddParagraph("VAT %", ParagraphAlignment.Center);
-            row.Cells[3].AddParagraph("UNIT PRICE", ParagraphAlignment.Center);
+            row.Cells[1].AddParagraph("AMOUNT", ParagraphAlignment.Right);
+            row.Cells[2].AddParagraph("VAT %", ParagraphAlignment.Right);
+            row.Cells[3].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
             if (Invoice.HasDiscount)
             {
-                row.Cells[4].AddParagraph("DISCOUNT", ParagraphAlignment.Center);
-                row.Cells[5].AddParagraph("TOTAL", ParagraphAlignment.Center);
+                row.Cells[4].AddParagraph("DISCOUNT", ParagraphAlignment.Right);
+                row.Cells[5].AddParagraph("TOTAL", ParagraphAlignment.Right);
             }
             else
             {
-                row.Cells[4].AddParagraph("TOTAL", ParagraphAlignment.Center);
+                row.Cells[4].AddParagraph("TOTAL", ParagraphAlignment.Right);
             }
         }
 
@@ -186,31 +186,31 @@ namespace Invoicer2.Services.Impl
 
             cell = row.Cells[1];
             cell.VerticalAlignment = VerticalAlignment.Center;
-            cell.AddParagraph(item.Amount.ToCurrency(), ParagraphAlignment.Center, "H2-9");
+            cell.AddParagraph(item.Amount.ToCurrency(), ParagraphAlignment.Right, "H2-9");
 
             cell = row.Cells[2];
             cell.VerticalAlignment = VerticalAlignment.Center;
-            cell.AddParagraph(item.VAT.ToCurrency(), ParagraphAlignment.Center, "H2-9");
+            cell.AddParagraph(item.VAT.ToCurrency(), ParagraphAlignment.Right, "H2-9");
 
             cell = row.Cells[3];
             cell.VerticalAlignment = VerticalAlignment.Center;
-            cell.AddParagraph(item.Price.ToCurrency(Invoice.Currency), ParagraphAlignment.Center, "H2-9");
+            cell.AddParagraph(item.Price.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
 
             if (Invoice.HasDiscount)
             {
                 cell = row.Cells[4];
                 cell.VerticalAlignment = VerticalAlignment.Center;
-                cell.AddParagraph(item.Discount, ParagraphAlignment.Center, "H2-9");
+                cell.AddParagraph(item.Discount, ParagraphAlignment.Right, "H2-9");
 
                 cell = row.Cells[5];
                 cell.VerticalAlignment = VerticalAlignment.Center;
-                cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Center, "H2-9");
+                cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
             }
             else
             {
                 cell = row.Cells[4];
                 cell.VerticalAlignment = VerticalAlignment.Center;
-                cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Center, "H2-9");
+                cell.AddParagraph(item.Total.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, "H2-9");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Invoicer2.Services.Impl
 
                 cell = row.Cells[5];
                 cell.Shading.Color = shading;
-                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Center, font);
+                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
             }
             else
             {
@@ -259,7 +259,7 @@ namespace Invoicer2.Services.Impl
 
                 cell = row.Cells[4];
                 cell.Shading.Color = shading;
-                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Center, font);
+                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
             }
         }
 
