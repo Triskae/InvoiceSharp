@@ -24,7 +24,4 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
-    publishVstsFeed: '3fa74d61-b85c-412a-bb76-4c64697000c5'
-    packagesToPack: '**/Invoicer2.csproj'
-    includesymbols: true
-    versioningScheme: 'byBuildNumber'
+    publishVstsFeed: 'b302ca25-cab8-4821-80b7-4c70cc1c3ae5'
