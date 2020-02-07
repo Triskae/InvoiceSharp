@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,10 +25,13 @@ namespace Invoicer2.Console
         /// </summary>
         public void GenerateTestWithoutVAT()
         {
+            byte[] image = LoadImage("vodafone.jpg");
+            string imageFilename = MigraDocFilenameFromByteArray(image);
+
             var invoice = new InvoicerApi(SizeOption.A4, OrientationOption.Landscape, "£")
             .TextColor("#CC0000")
             .BackColor("#FFD6CC")
-            .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
+            .Image(imageFilename, 125, 27)
             .Company(Address.Make(
                 "FROM",
                 new string[] {
@@ -66,6 +70,12 @@ namespace Invoicer2.Console
             }
 
 
+        }
+
+        static string MigraDocFilenameFromByteArray(byte[] image)
+        {
+            return "base64:" +
+                   Convert.ToBase64String(image);
         }
 
         /// <summary>
@@ -151,5 +161,22 @@ namespace Invoicer2.Console
                 .Footer("http://www.vodafone.co.uk")
                 .Save("VAT_Discount.pdf");
         }
+
+        static byte[] LoadImage(string name)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream stream = assembly.GetManifestResourceStream("Invoicer2.Console.images."+name))
+            {
+                if (stream == null)
+                    throw new ArgumentException("No resource with name " + name);
+
+                int count = (int)stream.Length;
+                byte[] data = new byte[count];
+                stream.Read(data, 0, count);
+                return data;
+            }
+        }
+
     }
 }

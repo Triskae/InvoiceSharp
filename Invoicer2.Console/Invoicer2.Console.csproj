@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="images\vodafone.jpg" />
+    <EmbeddedResource Include="images\vodafone.jpg" />
   </ItemGroup>
 
   <ItemGroup>
