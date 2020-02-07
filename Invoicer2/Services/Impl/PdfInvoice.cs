@@ -4,6 +4,7 @@ using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using PdfSharp.Pdf.Security;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Invoicer2.Services.Impl
@@ -104,6 +105,21 @@ namespace Invoicer2.Services.Impl
             if (!string.IsNullOrEmpty(password))
                 SetPassword(renderer, password);
             renderer.PdfDocument.Save(filename);
+        }
+
+        public Stream Get(string password = null)
+        {
+            CreateDocument();
+
+            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true);
+            renderer.Document = Pdf;
+            renderer.RenderDocument();
+            if (!string.IsNullOrEmpty(password))
+                SetPassword(renderer, password);
+
+            MemoryStream ms = new MemoryStream();
+            renderer.PdfDocument.Save(ms, false);
+            return ms;
         }
 
         private void CreateDocument()
