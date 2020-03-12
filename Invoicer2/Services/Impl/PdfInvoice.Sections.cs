@@ -45,9 +45,9 @@ namespace Invoicer2.Services.Impl
             row.Cells[0].AddParagraph("REFERENCE:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.Reference, ParagraphAlignment.Right, "H2-9");
             row.Cells[0].AddParagraph("INVOICE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
-            row.Cells[1].AddParagraph(Invoice.InvoiceDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
+            row.Cells[1].AddParagraph(Invoice.InvoiceDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
             row.Cells[0].AddParagraph("DUE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
-            row.Cells[1].AddParagraph(Invoice.DueDate.ToShortDateString(), ParagraphAlignment.Right, "H2-9");
+            row.Cells[1].AddParagraph(Invoice.DueDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
         }
 
         public void FooterSection()
