@@ -1,33 +1,58 @@
-# Invoicer
+# InvoiceSharp
 
-A simple PDF invoice generator for .NET.
+Wrapper arround Migradoc and PDFSharp to generate pdf invoices easy peasy.
+Based on Invoicer Thanks a lot ! 
+Invoicer was heavily used and modified to be more flexible and (for the moment) translated in french (maybe more to come ?)
 
 ### Usage
 
-    new InvoicerApi(SizeOption.A4, OrientationOption.Landscape, "£")
-        .TextColor("#CC0000")
-        .BackColor("#FFD6CC")
-        .Image(@"vodafone.jpg", 125, 27)
-        .Company(Address.Make("FROM", "Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN"))
-        .Client(Address.Make("BILLING TO", "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ"))
-        .Items(new List<ItemRow> { 
-            ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, 20, (decimal)166.66, (decimal)199.99),
-            ItemRow.Make("24 Months (£22.50pm)", "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal)1, 20, (decimal)360.00, (decimal)432.00),
-            ItemRow.Make("Special Offer", "Free case (blue)", (decimal)1, 0, (decimal)0, (decimal)0),
-        })
-        .Totals(new List<TotalRow> {
-            TotalRow.Make("Sub Total", (decimal)526.66),
-            TotalRow.Make("VAT @ 20%", (decimal)105.33),
-            TotalRow.Make("Total", (decimal)631.99, true),
-        })
-        .Details(new List<DetailRow> {
-            DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "", "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.", "", "Thank you for your business.")
-        })
-        .Footer("http://www.vodafone.co.uk")
-        .Save();
+		byte[] image = LoadImage("test.jpg");
+            	string imageFilename = MigraDocFilenameFromByteArray(image);
 
-![Alt text](http://s14.postimg.cc/525eovuep/invoice.png "Sample Invoice")
+            new InvoicerApi(SizeOption.A4, OrientationOption.Portrait, "€")
+                .TextColor("#057a55")
+                .BackColor("#F7FAFC")
+                .Image(imageFilename, 70, 70)
+                .Company(Address.Make(
+                    "FROM",
+                    new string[]
+                    {
+                        "Test Limited",
+                        "Test House",
+                        "Rue de la paix",
+                        "Paris",
+                        "CEDEX 15"
+                    },
+                    "1471587",
+                    "569953277",
+                    new string[]
+                    {
+                        "Vodafone Limited. Registered in England and Wales No. 1471587.",
+                        "Registered office: Vodafone House, The Connection, Newbury, Berkshire RG14 2FN."
+                    }))
+                .Client(Address.Make("INVOICE TO",
+                    new string[] {"Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ"}))
+                .Items(GenerateFakeDate())
+                .Totals(new List<TotalRow>
+                {
+                    TotalRow.Make("Sous Total", (decimal) 631.99, true),
+                    TotalRow.Make("Total TVA 20%", (decimal) 20.99, true),
+                    TotalRow.Make("Total TVA 10%", (decimal) 12.99, true),
+                    TotalRow.Make("Grand Total", (decimal) 800.99, true),
+                })
+                .Details(new List<DetailRow>
+                {
+                    DetailRow.Make("NOTES", "Payé par Stripe", "",
+                        "N'hésitez pas à nous contacter pour toutes questions ou toutes nouvelles commandes",
+                        "", "Merci et à très vite !")
+                })
+                .BillingDate(DateTime.Now)
+                .PayedDate(DateTime.Now)
+                .Save("Invoice.pdf");
+
+[![sample.png](https://i.postimg.cc/gcNvzN31/sample.png)](https://postimg.cc/dDZ7nRH9)
 		
 ### References
 * [PDFsharp/MigraDoc](http://pdfsharp.com)  
 * [HTML Color Picker](http://www.w3schools.com/tags/ref_colorpicker.asp)
+* [Original work](https://github.com/simonray/Invoicer)
