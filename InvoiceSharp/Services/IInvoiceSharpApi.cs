@@ -6,7 +6,7 @@ using InvoiceSharp.Models;
 
 namespace InvoiceSharp.Services
 {
-    public interface IInvoicerApi : IInvoicerOptions
+    public interface IInvoiceSharpApi : IInvoicerOptions
     {
 
     }

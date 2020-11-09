@@ -28,7 +28,7 @@ namespace Invoicer2.Console
             byte[] image = LoadImage("eucaly.jpg");
             string imageFilename = MigraDocFilenameFromByteArray(image);
 
-            var invoice = new InvoicerApi(SizeOption.A4, OrientationOption.Portrait, "€")
+            var invoice = new InvoiceSharpApi(SizeOption.A4, OrientationOption.Portrait, "€")
                 .TextColor("#057a55")
                 .BackColor("#F7FAFC")
                 .Image(imageFilename, 70, 70)
@@ -36,11 +36,11 @@ namespace Invoicer2.Console
                     "FROM",
                     new string[]
                     {
-                        "Vodafone Limited",
-                        "Vodafone House",
-                        "The Connection",
-                        "Newbury",
-                        "Berkshire RG14 2FN"
+                        "Test Limited",
+                        "Test House",
+                        "Rue de la paix",
+                        "Paris",
+                        "CEDEX 15"
                     },
                     "1471587",
                     "569953277",
@@ -61,9 +61,9 @@ namespace Invoicer2.Console
                 })
                 .Details(new List<DetailRow>
                 {
-                    DetailRow.Make("NOTES", "Make all cheques payable to Vodafone UK Limited.", "",
-                        "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.",
-                        "", "Thank you for your business.")
+                    DetailRow.Make("NOTES", "Payé par Stripe", "",
+                        "N'hésitez pas à nous contacter pour toutes questions ou toutes nouvelles commandes",
+                        "", "Merci et à très vite !")
                 })
                 .BillingDate(DateTime.Now)
                 .PayedDate(DateTime.Now);
@@ -80,7 +80,7 @@ namespace Invoicer2.Console
         private List<ItemRow> GenerateFakeDate()
         {
             List<ItemRow> list = new List<ItemRow>();
-            for (int i = 0; i < 90; i++)
+            for (int i = 0; i < 5; i++)
             {
                 list.Add(ItemRow.Make("Nexus 6", null, (decimal) 1, 20, (decimal) 166.66, (decimal) 199.99));
             }
@@ -99,7 +99,7 @@ namespace Invoicer2.Console
         /// </summary>
         public void GenerateTestWithoutVATAndWithDiscount()
         {
-            new InvoicerApi(SizeOption.A4, OrientationOption.Portrait, "€")
+            new InvoiceSharpApi(SizeOption.A4, OrientationOption.Portrait, "€")
                 .TextColor("#CC0000")
                 .BackColor("#FFD6CC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
@@ -137,7 +137,7 @@ namespace Invoicer2.Console
         /// </summary>
         public void GenerateTestWithVat()
         {
-            new InvoicerApi(SizeOption.A4, OrientationOption.Portrait, "€")
+            new InvoiceSharpApi(SizeOption.A4, OrientationOption.Portrait, "€")
                 .TextColor("#057a55")
                 .BackColor("#F7FAFC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
@@ -176,7 +176,7 @@ namespace Invoicer2.Console
         /// </summary>
         public void GenerateTestWithVatAndDiscount()
         {
-            new InvoicerApi(SizeOption.A4, OrientationOption.Landscape, "€")
+            new InvoiceSharpApi(SizeOption.A4, OrientationOption.Landscape, "€")
                 .TextColor("#CC0000")
                 .BackColor("#FFD6CC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)

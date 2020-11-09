@@ -9,7 +9,7 @@ using InvoiceSharp.Services.Impl;
 
 namespace InvoiceSharp.Services
 {
-    public class InvoicerApi : IInvoicerApi
+    public class InvoiceSharpApi : IInvoiceSharpApi
     {
         public Invoice Invoice { get; protected set; }
         
@@ -22,7 +22,7 @@ namespace InvoiceSharp.Services
             }
         }
 
-        public InvoicerApi(
+        public InvoiceSharpApi(
             SizeOption size = SizeOption.A4,
             OrientationOption orientation = OrientationOption.Portrait,
             string currency = "€"
