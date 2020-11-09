@@ -55,22 +55,33 @@ namespace Invoicer2.Services.Impl
             HeaderFooter footer = Pdf.LastSection.Footers.Primary;
 
             Table table = footer.AddTable();
-            table.AddColumn(footer.Section.PageWidth() / 2);
-            table.AddColumn(footer.Section.PageWidth() / 2);
+            table.AddColumn(footer.Section.PageWidth());
             Row row = table.AddRow();
-            if (!string.IsNullOrEmpty(Invoice.Footer))
+            
+            if (Invoice.Company.HasLegalTextLines)
             {
-                Paragraph paragraph = row.Cells[0].AddParagraph(Invoice.Footer, ParagraphAlignment.Left, "H2-8-Blue");
-                Hyperlink link = paragraph.AddHyperlink(Invoice.Footer, HyperlinkType.Web);
-            }
+                Color shading = MigraDocHelpers.TextColorFromHtml(Invoice.TextColor);
 
-            Paragraph info = row.Cells[1].AddParagraph();
-            info.Format.Alignment = ParagraphAlignment.Right;
-            info.Style = "H2-8";
-            info.AddText("Page ");
-            info.AddPageField();
-            info.AddText(" of ");
-            info.AddNumPagesField();
+                foreach (var line in Invoice.Company.LegalTextLines)
+                {
+                    row.Cells[0].AddParagraph(line, ParagraphAlignment.Center, "H2-9B-Inverse")
+                        .Format.Shading.Color = shading;
+                }
+            }
+            
+            // if (!string.IsNullOrEmpty(Invoice.Footer))
+            // {
+            //     Paragraph paragraph = row.Cells[0].AddParagraph(Invoice.Footer, ParagraphAlignment.Left, "H2-8-Blue");
+            //     Hyperlink link = paragraph.AddHyperlink(Invoice.Footer, HyperlinkType.Web);
+            // }
+
+            // Paragraph info = row.Cells[1].AddParagraph();
+            // info.Format.Alignment = ParagraphAlignment.Right;
+            // info.Style = "H2-8";
+            // info.AddText("Page ");
+            // info.AddPageField();
+            // info.AddText(" of ");
+            // info.AddNumPagesField();
         }
 
         private void AddressSection()
@@ -190,7 +201,7 @@ namespace Invoicer2.Services.Impl
 
             Cell cell = row.Cells[COLUMN_PRODUCT];
             cell.AddParagraph(item.Name, ParagraphAlignment.Left, "H2-9B");
-            cell.AddParagraph(item.Description, ParagraphAlignment.Left, "H2-9-Grey");
+            //cell.AddParagraph(item.Description, ParagraphAlignment.Left, "H2-9-Grey");
 
             cell = row.Cells[COLUMN_QTY];
             cell.VerticalAlignment = VerticalAlignment.Center;
@@ -273,19 +284,6 @@ namespace Invoicer2.Services.Impl
                         Paragraph name = row.Cells[0].AddParagraph();
                         name.AddFormattedText(line, "H2-9-Grey");
                     }
-                }
-            }
-
-            if (Invoice.Company.HasLegalTextLines)
-            {
-                row = table.AddRow();
-
-                Color shading = MigraDocHelpers.TextColorFromHtml(Invoice.TextColor);
-
-                foreach (var line in Invoice.Company.LegalTextLines)
-                {
-                    row.Cells[0].AddParagraph(line, ParagraphAlignment.Center, "H2-9B-Inverse")
-                    .Format.Shading.Color = shading;
                 }
             }
         }

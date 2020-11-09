@@ -15,7 +15,7 @@ namespace Invoicer2.Helpers
 
         public static string ToCurrency(this decimal number, string symbol)
         {
-            return string.Format("{0}{1:N2}", symbol, number);
+            return string.Format("{1:N2}{0}", symbol, number);
         }
 
         public static void Swap<T>(ref T lhs, ref T rhs)
