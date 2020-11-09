@@ -1,4 +1,4 @@
-﻿using Invoicer2.Helpers;
+﻿using InvoiceSharp.Helpers;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Invoicer2.Helpers
+namespace InvoiceSharp.Helpers
 {
     public static class MigraDocHelpers
     {

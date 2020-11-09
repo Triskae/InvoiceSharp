@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Invoicer2.Models
+namespace InvoiceSharp.Models
 {
     public class TotalRow
     {

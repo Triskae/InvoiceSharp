@@ -1,13 +1,13 @@
-﻿using Invoicer2.Helpers;
-using Invoicer2.Models;
-using Invoicer2.Services.Impl;
+﻿using InvoiceSharp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using InvoiceSharp.Models;
+using InvoiceSharp.Services.Impl;
 
-namespace Invoicer2.Services
+namespace InvoiceSharp.Services
 {
     public class InvoicerApi : IInvoicerApi
     {
@@ -25,16 +25,16 @@ namespace Invoicer2.Services
         public InvoicerApi(
             SizeOption size = SizeOption.A4,
             OrientationOption orientation = OrientationOption.Portrait,
-            string currency = "£"
+            string currency = "€"
             )
         {
             Invoice = new Invoice();
-            Invoice.Title = "Invoice";
+            Invoice.Title = "Facture";
             Invoice.PageSize = size;
             Invoice.PageOrientation = orientation;
             Invoice.Currency = currency;
             Invoice.InvoiceDate = DateTime.Now;
-            Invoice.DueDate = Invoice.InvoiceDate.AddDays(14);
+            Invoice.PayedDate = Invoice.InvoiceDate.AddDays(14);
             Invoice.Reference = DefaultReference;
         }
 
@@ -76,9 +76,9 @@ namespace Invoicer2.Services
             return this;
         }
 
-        public IInvoicerOptions DueDate(DateTime dueDate)
+        public IInvoicerOptions PayedDate(DateTime dueDate)
         {
-            Invoice.DueDate = dueDate;
+            Invoice.PayedDate = dueDate;
             return this;
         }
 

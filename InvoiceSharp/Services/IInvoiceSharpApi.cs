@@ -1,10 +1,10 @@
-﻿using Invoicer2.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using InvoiceSharp.Models;
 
-namespace Invoicer2.Services
+namespace InvoiceSharp.Services
 {
     public interface IInvoicerApi : IInvoicerOptions
     {
@@ -50,7 +50,7 @@ namespace Invoicer2.Services
         /// Set the due date.
         /// </summary>
         /// <param name="dueDate">Date, if ommited this is set to todays date + 14 days.</param>
-        IInvoicerOptions DueDate(DateTime dueDate);
+        IInvoicerOptions PayedDate(DateTime dueDate);
 
         /// <summary>
         /// Set the company address

@@ -1,5 +1,5 @@
-﻿using Invoicer2.Models;
-using Invoicer2.Services;
+﻿using InvoiceSharp.Models;
+using InvoiceSharp.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +14,7 @@ namespace Invoicer2.Console
     {
         public void Go()
         {
-            this.GenerateTestWithoutVAT();
+            this.GenerateTestEucaly();
             this.GenerateTestWithoutVATAndWithDiscount();
             this.GenerateTestWithVat();
             this.GenerateTestWithVatAndDiscount();
@@ -23,137 +23,50 @@ namespace Invoicer2.Console
         /// <summary>
         /// Generates the test without VAT or discount.
         /// </summary>
-        public void GenerateTestWithoutVAT()
+        public void GenerateTestEucaly()
         {
-            byte[] image = LoadImage("vodafone.jpg");
+            byte[] image = LoadImage("eucaly.jpg");
             string imageFilename = MigraDocFilenameFromByteArray(image);
 
             var invoice = new InvoicerApi(SizeOption.A4, OrientationOption.Portrait, "€")
-            .TextColor("#057a55")
-            .BackColor("#F7FAFC")
-            .Image(imageFilename, 125, 27)
-            .Company(Address.Make(
-                "FROM",
-                new string[] {
-                    "Vodafone Limited",
-                    "Vodafone House",
-                    "The Connection",
-                    "Newbury",
-                    "Berkshire RG14 2FN"
-                },
-                "1471587",
-                null,
-                new string[] {
-                    "Vodafone Limited. Registered in England and Wales No. 1471587.",
-                    "Registered office: Vodafone House, The Connection, Newbury, Berkshire RG14 2FN."
-                }))
-            .Client(Address.Make("INVOICE TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
-            .Items(new List<ItemRow> {
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                ItemRow.Make("Nexus 6", "", (decimal)1, (decimal)199.99, (decimal)199.99),
-                ItemRow.Make("24 Months (€22.50pm)", "", (decimal)1, (decimal)432.00, (decimal)432.00),
-                ItemRow.Make("Special Offer", "", (decimal)1, (decimal)0, (decimal)0),
-                
-            })
-            .Totals(new List<TotalRow> {
-                TotalRow.Make("Total", (decimal)631.99, true),
-            })
-            .Details(new List<DetailRow> {
-                DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "", "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.", "", "Thank you for your business.")
-            })
-            .Footer("http://www.vodafone.co.uk");
+                .TextColor("#057a55")
+                .BackColor("#F7FAFC")
+                .Image(imageFilename, 70, 70)
+                .Company(Address.Make(
+                    "FROM",
+                    new string[]
+                    {
+                        "Vodafone Limited",
+                        "Vodafone House",
+                        "The Connection",
+                        "Newbury",
+                        "Berkshire RG14 2FN"
+                    },
+                    "1471587",
+                    "569953277",
+                    new string[]
+                    {
+                        "Vodafone Limited. Registered in England and Wales No. 1471587.",
+                        "Registered office: Vodafone House, The Connection, Newbury, Berkshire RG14 2FN."
+                    }))
+                .Client(Address.Make("INVOICE TO",
+                    new string[] {"Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ"}))
+                .Items(GenerateFakeDate())
+                .Totals(new List<TotalRow>
+                {
+                    TotalRow.Make("Sous Total", (decimal) 631.99, true),
+                    TotalRow.Make("Total TVA 20%", (decimal) 20.99, true),
+                    TotalRow.Make("Total TVA 10%", (decimal) 12.99, true),
+                    TotalRow.Make("Grand Total", (decimal) 800.99, true),
+                })
+                .Details(new List<DetailRow>
+                {
+                    DetailRow.Make("NOTES", "Make all cheques payable to Vodafone UK Limited.", "",
+                        "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.",
+                        "", "Thank you for your business.")
+                })
+                .BillingDate(DateTime.Now)
+                .PayedDate(DateTime.Now);
 
             using (var stream = invoice.Get())
             {
@@ -162,8 +75,17 @@ namespace Invoicer2.Console
                     stream.CopyTo(fs);
                 }
             }
+        }
 
+        private List<ItemRow> GenerateFakeDate()
+        {
+            List<ItemRow> list = new List<ItemRow>();
+            for (int i = 0; i < 90; i++)
+            {
+                list.Add(ItemRow.Make("Nexus 6", null, (decimal) 1, 20, (decimal) 166.66, (decimal) 199.99));
+            }
 
+            return list;
         }
 
         static string MigraDocFilenameFromByteArray(byte[] image)
@@ -181,19 +103,30 @@ namespace Invoicer2.Console
                 .TextColor("#CC0000")
                 .BackColor("#FFD6CC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
-                .Company(Address.Make("FROM", new string[] { "Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN" }, "1471587", null))
-                .Client(Address.Make("BILLING TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
-                .Items(new List<ItemRow> {
-                    ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, 0, (decimal)199.99, (decimal)199.99),
-                    ItemRow.Make("24 Months (€22.50pm)", "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal)1, (decimal)432.00, (decimal)432.00),
-                    ItemRow.Make("Special Offer", "Free case (blue)", (decimal)1, (decimal)0, (decimal)0),
-                    ItemRow.Make("Test", "This needs improving", (decimal)1, (decimal)10, "-5.00", (decimal)-5),
+                .Company(Address.Make("FROM",
+                    new string[]
+                        {"Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN"},
+                    "1471587", null))
+                .Client(Address.Make("BILLING TO",
+                    new string[] {"Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ"}))
+                .Items(new List<ItemRow>
+                {
+                    ItemRow.Make("Nexus 6", "Midnight Blue", (decimal) 1, 0, (decimal) 199.99, (decimal) 199.99),
+                    ItemRow.Make("24 Months (€22.50pm)",
+                        "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal) 1,
+                        (decimal) 432.00, (decimal) 432.00),
+                    ItemRow.Make("Special Offer", "Free case (blue)", (decimal) 1, (decimal) 0, (decimal) 0),
+                    ItemRow.Make("Test", "This needs improving", (decimal) 1, (decimal) 10, "-5.00", (decimal) -5),
                 })
-                .Totals(new List<TotalRow> {
-                    TotalRow.Make("Total", (decimal)626.99, true),
+                .Totals(new List<TotalRow>
+                {
+                    TotalRow.Make("Total", (decimal) 626.99, true),
                 })
-                .Details(new List<DetailRow> {
-                    DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "", "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.", "", "Thank you for your business.")
+                .Details(new List<DetailRow>
+                {
+                    DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "",
+                        "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.",
+                        "", "Thank you for your business.")
                 })
                 .Footer("http://www.vodafone.co.uk")
                 .Save("NonVAT_Discount.pdf");
@@ -205,23 +138,34 @@ namespace Invoicer2.Console
         public void GenerateTestWithVat()
         {
             new InvoicerApi(SizeOption.A4, OrientationOption.Portrait, "€")
-                .TextColor("#CC0000")
-                .BackColor("#FFD6CC")
+                .TextColor("#057a55")
+                .BackColor("#F7FAFC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
-                .Company(Address.Make("FROM", new string[] { "Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN" }, "1471587", "569953277"))
-                .Client(Address.Make("BILLING TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
-                .Items(new List<ItemRow> {
-                    ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, 20, (decimal)166.66, (decimal)199.99),
-                    ItemRow.Make("24 Months (€22.50pm)", "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal)1, 20, (decimal)360.00, (decimal)432.00),
-                    ItemRow.Make("Special Offer", "Free case (blue)", (decimal)1, 0, (decimal)0, (decimal)0),
+                .Company(Address.Make("FROM",
+                    new string[]
+                        {"Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN"},
+                    "1471587", "569953277"))
+                .Client(Address.Make("BILLING TO",
+                    new string[] {"Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ"}))
+                .Items(new List<ItemRow>
+                {
+                    ItemRow.Make("Nexus 6", "Midnight Blue", (decimal) 1, 20, (decimal) 166.66, (decimal) 199.99),
+                    ItemRow.Make("24 Months (€22.50pm)",
+                        "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal) 1, 20,
+                        (decimal) 360.00, (decimal) 432.00),
+                    ItemRow.Make("Special Offer", "Free case (blue)", (decimal) 1, 0, (decimal) 0, (decimal) 0),
                 })
-                .Totals(new List<TotalRow> {
-                    TotalRow.Make("Sub Total", (decimal)526.66),
-                    TotalRow.Make("VAT @ 20%", (decimal)105.33),
-                    TotalRow.Make("Total", (decimal)631.99, true),
+                .Totals(new List<TotalRow>
+                {
+                    TotalRow.Make("Sub Total", (decimal) 526.66),
+                    TotalRow.Make("VAT @ 20%", (decimal) 105.33),
+                    TotalRow.Make("Total", (decimal) 631.99, true),
                 })
-                .Details(new List<DetailRow> {
-                    DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "", "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.", "", "Thank you for your business.")
+                .Details(new List<DetailRow>
+                {
+                    DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "",
+                        "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.",
+                        "", "Thank you for your business.")
                 })
                 .Footer("http://www.vodafone.co.uk")
                 .Save("VAT.pdf");
@@ -236,21 +180,32 @@ namespace Invoicer2.Console
                 .TextColor("#CC0000")
                 .BackColor("#FFD6CC")
                 .Image(@"..\..\..\images\vodafone.jpg", 125, 27)
-                .Company(Address.Make("FROM", new string[] { "Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN" }, "1471587", "569953277"))
-                .Client(Address.Make("BILLING TO", new string[] { "Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ" }))
-                .Items(new List<ItemRow> {
-                    ItemRow.Make("Nexus 6", "Midnight Blue", (decimal)1, 20, (decimal)166.66, (decimal)199.99),
-                    ItemRow.Make("24 Months (€22.50pm)", "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal)1, 20, (decimal)360.00, (decimal)432.00),
-                    ItemRow.Make("Special Offer", "Free case (blue)", (decimal)1, 0, (decimal)0, (decimal)0),
-                    ItemRow.Make("Test", "This needs improving", (decimal)1, 0, (decimal)10, "-5.00", (decimal)-5),
+                .Company(Address.Make("FROM",
+                    new string[]
+                        {"Vodafone Limited", "Vodafone House", "The Connection", "Newbury", "Berkshire RG14 2FN"},
+                    "1471587", "569953277"))
+                .Client(Address.Make("BILLING TO",
+                    new string[] {"Isabella Marsh", "Overton Circle", "Little Welland", "Worcester", "WR## 2DJ"}))
+                .Items(new List<ItemRow>
+                {
+                    ItemRow.Make("Nexus 6", "Midnight Blue", (decimal) 1, 20, (decimal) 166.66, (decimal) 199.99),
+                    ItemRow.Make("24 Months (€22.50pm)",
+                        "100 minutes, Unlimited texts, 100 MB data 3G plan with 3GB of UK Wi-Fi", (decimal) 1, 20,
+                        (decimal) 360.00, (decimal) 432.00),
+                    ItemRow.Make("Special Offer", "Free case (blue)", (decimal) 1, 0, (decimal) 0, (decimal) 0),
+                    ItemRow.Make("Test", "This needs improving", (decimal) 1, 0, (decimal) 10, "-5.00", (decimal) -5),
                 })
-                .Totals(new List<TotalRow> {
-                    TotalRow.Make("Sub Total", (decimal)526.66),
-                    TotalRow.Make("VAT @ 20%", (decimal)105.33),
-                    TotalRow.Make("Total", (decimal)631.99, true),
+                .Totals(new List<TotalRow>
+                {
+                    TotalRow.Make("Sub Total", (decimal) 526.66),
+                    TotalRow.Make("VAT @ 20%", (decimal) 105.33),
+                    TotalRow.Make("Total", (decimal) 631.99, true),
                 })
-                .Details(new List<DetailRow> {
-                    DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "", "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.", "", "Thank you for your business.")
+                .Details(new List<DetailRow>
+                {
+                    DetailRow.Make("PAYMENT INFORMATION", "Make all cheques payable to Vodafone UK Limited.", "",
+                        "If you have any questions concerning this invoice, contact our sales department at sales@vodafone.co.uk.",
+                        "", "Thank you for your business.")
                 })
                 .Footer("http://www.vodafone.co.uk")
                 .Save("VAT_Discount.pdf");
@@ -260,17 +215,16 @@ namespace Invoicer2.Console
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            using (Stream stream = assembly.GetManifestResourceStream("Invoicer2.Console.images."+name))
+            using (Stream stream = assembly.GetManifestResourceStream("Invoicer2.Console.images." + name))
             {
                 if (stream == null)
                     throw new ArgumentException("No resource with name " + name);
 
-                int count = (int)stream.Length;
+                int count = (int) stream.Length;
                 byte[] data = new byte[count];
                 stream.Read(data, 0, count);
                 return data;
             }
         }
-
     }
 }

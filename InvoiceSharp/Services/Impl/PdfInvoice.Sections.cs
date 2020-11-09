@@ -1,12 +1,12 @@
-﻿using Invoicer2.Helpers;
-using Invoicer2.Models;
-using MigraDoc.DocumentObjectModel;
+﻿using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
 using System;
 using System.Linq;
+using InvoiceSharp.Helpers;
+using InvoiceSharp.Models;
 
-namespace Invoicer2.Services.Impl
+namespace InvoiceSharp.Services.Impl
 {
     public partial class PdfInvoice
     {
@@ -42,12 +42,12 @@ namespace Invoicer2.Services.Impl
             row.Cells[0].AddParagraph(Invoice.Title, ParagraphAlignment.Right, "H1-20");
 
             row = subTable.AddRow();
-            row.Cells[0].AddParagraph("REFERENCE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[0].AddParagraph("COMMANDE N°:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.Reference, ParagraphAlignment.Right, "H2-9");
-            row.Cells[0].AddParagraph("INVOICE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[0].AddParagraph("EDITÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.InvoiceDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
-            row.Cells[0].AddParagraph("DUE DATE:", ParagraphAlignment.Left, "H2-9B-Color");
-            row.Cells[1].AddParagraph(Invoice.DueDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
+            row.Cells[0].AddParagraph("PAYÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");
+            row.Cells[1].AddParagraph(Invoice.PayedDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
         }
 
         public void FooterSection()
@@ -56,32 +56,24 @@ namespace Invoicer2.Services.Impl
 
             Table table = footer.AddTable();
             table.AddColumn(footer.Section.PageWidth());
+            table.AddColumn(footer.Section.PageWidth()/10);
             Row row = table.AddRow();
             
             if (Invoice.Company.HasLegalTextLines)
             {
-                Color shading = MigraDocHelpers.TextColorFromHtml(Invoice.TextColor);
-
                 foreach (var line in Invoice.Company.LegalTextLines)
                 {
-                    row.Cells[0].AddParagraph(line, ParagraphAlignment.Center, "H2-9B-Inverse")
-                        .Format.Shading.Color = shading;
+                    row.Cells[0].AddParagraph(line, ParagraphAlignment.Center, "H2-9");
                 }
             }
-            
-            // if (!string.IsNullOrEmpty(Invoice.Footer))
-            // {
-            //     Paragraph paragraph = row.Cells[0].AddParagraph(Invoice.Footer, ParagraphAlignment.Left, "H2-8-Blue");
-            //     Hyperlink link = paragraph.AddHyperlink(Invoice.Footer, HyperlinkType.Web);
-            // }
 
-            // Paragraph info = row.Cells[1].AddParagraph();
-            // info.Format.Alignment = ParagraphAlignment.Right;
-            // info.Style = "H2-8";
-            // info.AddText("Page ");
-            // info.AddPageField();
-            // info.AddText(" of ");
-            // info.AddNumPagesField();
+            row.Cells[1].AddParagraph();
+            Paragraph info = row.Cells[1].AddParagraph();
+            info.Format.Alignment = ParagraphAlignment.Right;
+            info.Style = "H2-9";
+            info.AddPageField();
+            info.AddText(" / ");
+            info.AddNumPagesField();
         }
 
         private void AddressSection()
@@ -175,19 +167,19 @@ namespace Invoicer2.Services.Impl
             row.TopPadding = 10;
             row.Borders.Bottom = BorderLine;
 
-            row.Cells[COLUMN_PRODUCT].AddParagraph("DESCRIPTION", ParagraphAlignment.Left); // TODO: Was PRODUCT - can we have a setting for Product/Service invoices?
-            row.Cells[COLUMN_QTY].AddParagraph("QTY", ParagraphAlignment.Right);
-            row.Cells[COLUMN_UNITPRICE].AddParagraph("UNIT PRICE", ParagraphAlignment.Right);
+            row.Cells[COLUMN_PRODUCT].AddParagraph("PRODUIT", ParagraphAlignment.Left); // TODO: Was PRODUCT - can we have a setting for Product/Service invoices?
+            row.Cells[COLUMN_QTY].AddParagraph("QTÉ", ParagraphAlignment.Right);
+            row.Cells[COLUMN_UNITPRICE].AddParagraph("PRIX HT", ParagraphAlignment.Right);
             row.Cells[COLUMN_TOTAL].AddParagraph("TOTAL", ParagraphAlignment.Right);
 
             if (Invoice.Company.HasVatNumber)
             {
-                row.Cells[COLUMN_VATPERCENT].AddParagraph("VAT %", ParagraphAlignment.Right);
+                row.Cells[COLUMN_VATPERCENT].AddParagraph("TVA", ParagraphAlignment.Right);
             }
 
             if (Invoice.HasDiscount)
             {
-                row.Cells[COLUMN_DISCOUNT].AddParagraph("DISCOUNT", ParagraphAlignment.Right);
+                row.Cells[COLUMN_DISCOUNT].AddParagraph("REMISE", ParagraphAlignment.Right);
             }
 
             
@@ -201,7 +193,10 @@ namespace Invoicer2.Services.Impl
 
             Cell cell = row.Cells[COLUMN_PRODUCT];
             cell.AddParagraph(item.Name, ParagraphAlignment.Left, "H2-9B");
-            //cell.AddParagraph(item.Description, ParagraphAlignment.Left, "H2-9-Grey");
+            if (!String.IsNullOrEmpty(item.Description))
+            {
+                cell.AddParagraph(item.Description, ParagraphAlignment.Left, "H2-9-Grey");
+            }
 
             cell = row.Cells[COLUMN_QTY];
             cell.VerticalAlignment = VerticalAlignment.Center;
@@ -275,12 +270,6 @@ namespace Invoicer2.Services.Impl
                     TextFrame frame = null;
                     foreach (string line in detail.Paragraphs)
                     {
-                        //if (line == detail.Paragraphs[0])
-                        //{
-                        //    frame = row.Cells[0].AddTextFrame();
-                        //    frame.Width = section.Document.PageWidth();
-                        //}
-                        //frame.AddParagraph("X - " + line, ParagraphAlignment.Left, "H2-9");
                         Paragraph name = row.Cells[0].AddParagraph();
                         name.AddFormattedText(line, "H2-9-Grey");
                     }

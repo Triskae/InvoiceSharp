@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Invoicer2.Models
+namespace InvoiceSharp.Models
 {
     public class DetailRow
     {

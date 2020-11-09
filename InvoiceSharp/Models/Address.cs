@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Invoicer2.Models
+namespace InvoiceSharp.Models
 {
     public class Address
     {

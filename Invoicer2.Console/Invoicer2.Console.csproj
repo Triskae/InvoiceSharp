@@ -11,10 +11,11 @@
 
   <ItemGroup>
     <EmbeddedResource Include="images\vodafone.jpg" />
+    <EmbeddedResource Include="images\eucaly.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Invoicer2\Invoicer2.csproj" />
+    <ProjectReference Include="..\InvoiceSharp\InvoiceSharp.csproj" />
   </ItemGroup>
 
 </Project>

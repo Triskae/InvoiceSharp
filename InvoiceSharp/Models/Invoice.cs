@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace Invoicer2.Models
+namespace InvoiceSharp.Models
 {
     public class Invoice
     {
@@ -18,7 +18,7 @@ namespace Invoicer2.Models
         public string Title { get; set; }
         public string Reference { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public DateTime DueDate { get; set; }
+        public DateTime PayedDate { get; set; }
         public Address Client { get; set; }
         public Address Company { get; set; }
         public PositionOption CompanyOrientation { get; set; }

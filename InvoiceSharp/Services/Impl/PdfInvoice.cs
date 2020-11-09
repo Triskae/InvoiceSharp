@@ -1,13 +1,13 @@
-﻿using Invoicer2.Helpers;
-using Invoicer2.Models;
-using MigraDoc.DocumentObjectModel;
+﻿using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using PdfSharp.Pdf.Security;
 using System;
 using System.IO;
 using System.Linq;
+using InvoiceSharp.Helpers;
+using InvoiceSharp.Models;
 
-namespace Invoicer2.Services.Impl
+namespace InvoiceSharp.Services.Impl
 {
     public partial class PdfInvoice
     {

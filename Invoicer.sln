@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer", "Invoicer\Invoic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer.Console", "Invoicer.Console\Invoicer.Console.csproj", "{E7CD7592-86C8-447E-BE01-BF979D7B4894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer2", "Invoicer2\Invoicer2.csproj", "{A5B273AB-92D9-4A77-83E7-CED5895FE3D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceSharp", "InvoiceSharp\InvoiceSharp.csproj", "{A5B273AB-92D9-4A77-83E7-CED5895FE3D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer2.Console", "Invoicer2.Console\Invoicer2.Console.csproj", "{F4F73119-B8F0-41BE-83A0-859825EA59A2}"
 EndProject
