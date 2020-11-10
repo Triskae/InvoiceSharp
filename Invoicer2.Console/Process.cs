@@ -32,6 +32,8 @@ namespace Invoicer2.Console
                 .TextColor("#057a55")
                 .BackColor("#F7FAFC")
                 .Image(imageFilename, 70, 70)
+                .Title("FACTURE N° " + 12)
+                .OrderReference("ORDER ID")
                 .Company(Address.Make(
                     "FROM",
                     new string[]

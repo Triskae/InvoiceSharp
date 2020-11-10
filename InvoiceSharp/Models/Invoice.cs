@@ -16,7 +16,8 @@ namespace InvoiceSharp.Models
         public string Image { get; set; }
         public Size ImageSize { get; set; }
         public string Title { get; set; }
-        public string Reference { get; set; }
+        public string OrderReference { get; set; }
+        public string InvoiceReference { get; set; }
         public DateTime InvoiceDate { get; set; }
         public DateTime PayedDate { get; set; }
         public Address Client { get; set; }

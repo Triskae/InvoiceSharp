@@ -42,8 +42,11 @@ namespace InvoiceSharp.Services.Impl
             row.Cells[0].AddParagraph(Invoice.Title, ParagraphAlignment.Right, "H1-20");
 
             row = subTable.AddRow();
-            row.Cells[0].AddParagraph("COMMANDE N°:", ParagraphAlignment.Left, "H2-9B-Color");
-            row.Cells[1].AddParagraph(Invoice.Reference, ParagraphAlignment.Right, "H2-9");
+            if (!String.IsNullOrEmpty(Invoice.OrderReference))
+            {
+                row.Cells[0].AddParagraph("COMMANDE N°:", ParagraphAlignment.Left, "H2-9B-Color");
+                row.Cells[1].AddParagraph(Invoice.OrderReference, ParagraphAlignment.Right, "H2-9");
+            }
             row.Cells[0].AddParagraph("EDITÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.InvoiceDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
             row.Cells[0].AddParagraph("PAYÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");

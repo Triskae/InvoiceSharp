@@ -35,10 +35,10 @@ namespace InvoiceSharp.Services
         IInvoicerOptions Title(string title);
 
         /// <summary>
-        /// A unique reference number for the document.
+        /// A unique reference number for the order.
         /// </summary>
-        /// <param name="reference">Reference (e.g. '123456-1'). If ommited the default is year, week, weekday.</param>
-        IInvoicerOptions Reference(string reference);
+        /// <param name="reference">Reference (e.g. '123456-1'). If ommited the line while not be displayed.</param>
+        IInvoicerOptions OrderReference(string reference);
 
         /// <summary>
         /// Set the document billing date

@@ -13,14 +13,7 @@ namespace InvoiceSharp.Services
     {
         public Invoice Invoice { get; protected set; }
         
-        public static string DefaultReference
-        {
-            get
-            {
-                DateTime now = DateTime.Now;
-                return string.Format("{0}{1}{2}", now.GetShortYear(), now.GetWeekNumber(), (int)now.DayOfWeek);
-            }
-        }
+        public static string DefaultReference => "";
 
         public InvoiceSharpApi(
             SizeOption size = SizeOption.A4,
@@ -35,7 +28,7 @@ namespace InvoiceSharp.Services
             Invoice.Currency = currency;
             Invoice.InvoiceDate = DateTime.Now;
             Invoice.PayedDate = Invoice.InvoiceDate.AddDays(14);
-            Invoice.Reference = DefaultReference;
+            Invoice.OrderReference = DefaultReference;
         }
 
         public IInvoicerOptions BackColor(string color)
@@ -64,9 +57,9 @@ namespace InvoiceSharp.Services
             return this;
         }
 
-        public IInvoicerOptions Reference(string reference)
+        public IInvoicerOptions OrderReference(string reference)
         {
-            Invoice.Reference = reference;
+            Invoice.OrderReference = reference;
             return this;
         }
 
@@ -127,8 +120,8 @@ namespace InvoiceSharp.Services
         public void Save(string filename, string password = null)
         {
             if (filename == null || !System.IO.Path.HasExtension(filename))
-                filename = System.IO.Path.ChangeExtension(Invoice.Reference, "pdf");
-           new PdfInvoice(Invoice).Save(filename, password);
+                filename = System.IO.Path.ChangeExtension(Invoice.OrderReference, "pdf");
+            new PdfInvoice(Invoice).Save(filename, password);
         }
 
         public Stream Get(string password = null)

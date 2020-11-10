@@ -8,10 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer", "Invoicer\Invoicer.csproj", "{E5BA227E-4AFE-448A-B879-A2784B3FC97C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer.Console", "Invoicer.Console\Invoicer.Console.csproj", "{E7CD7592-86C8-447E-BE01-BF979D7B4894}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceSharp", "InvoiceSharp\InvoiceSharp.csproj", "{A5B273AB-92D9-4A77-83E7-CED5895FE3D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer2.Console", "Invoicer2.Console\Invoicer2.Console.csproj", "{F4F73119-B8F0-41BE-83A0-859825EA59A2}"
@@ -22,14 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E5BA227E-4AFE-448A-B879-A2784B3FC97C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5BA227E-4AFE-448A-B879-A2784B3FC97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5BA227E-4AFE-448A-B879-A2784B3FC97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5BA227E-4AFE-448A-B879-A2784B3FC97C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7CD7592-86C8-447E-BE01-BF979D7B4894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7CD7592-86C8-447E-BE01-BF979D7B4894}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7CD7592-86C8-447E-BE01-BF979D7B4894}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7CD7592-86C8-447E-BE01-BF979D7B4894}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5B273AB-92D9-4A77-83E7-CED5895FE3D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5B273AB-92D9-4A77-83E7-CED5895FE3D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5B273AB-92D9-4A77-83E7-CED5895FE3D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
