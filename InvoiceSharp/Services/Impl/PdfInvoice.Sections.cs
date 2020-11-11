@@ -133,7 +133,7 @@ namespace InvoiceSharp.Services.Impl
             //double productWidth = Unit.FromPoint(150);
             //double numericWidth = (width - productWidth) / this.COLUMN_TOTAL;
 
-            double numericWidth = Unit.FromPoint(100);
+            double numericWidth = Unit.FromPoint(70);
             double productWidth = (width - (numericWidth * this.COLUMN_TOTAL));
             
 
