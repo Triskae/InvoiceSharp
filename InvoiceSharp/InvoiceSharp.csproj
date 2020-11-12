@@ -7,7 +7,7 @@
     <Description>Wrapper arround Migradoc and PDFSharp to generate pdf invoices easy peasy</Description>
     <PackageProjectUrl>https://github.com/Triskae/InvoiceSharp</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageVersion>0.9.23</PackageVersion>
+    <PackageVersion>0.9.25</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>0.9.1</Version>
   </PropertyGroup>

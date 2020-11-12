@@ -127,16 +127,16 @@ namespace InvoiceSharp.Services.Impl
             Section section = Pdf.LastSection;
 
             Table table = section.AddTable();
+            
 
             double width = section.PageWidth();
 
-            //double productWidth = Unit.FromPoint(150);
-            //double numericWidth = (width - productWidth) / this.COLUMN_TOTAL;
+            double productWidth = Unit.FromPoint(130);
+            double numericWidth = (width - productWidth) / this.COLUMN_TOTAL;
 
-            double numericWidth = Unit.FromPoint(70);
-            double productWidth = (width - (numericWidth * this.COLUMN_TOTAL));
+            // double numericWidth = Unit.FromPoint(70);
+            // double productWidth = (width - (numericWidth * this.COLUMN_TOTAL));
             
-
             table.AddColumn(productWidth);
 
             for(int i = 0; i <= this.COLUMN_TOTAL - 1; i++)
@@ -150,15 +150,23 @@ namespace InvoiceSharp.Services.Impl
             {
                 BillingRow(table, item);
             }
-
+            
             if (Invoice.Totals != null)
             {
+                Table totalsTable = section.AddTable();
+                var rows = totalsTable.Rows;
+                totalsTable.AddColumn(productWidth);
+                totalsTable.AddColumn(ParagraphAlignment.Center, numericWidth);
+                totalsTable.AddColumn(ParagraphAlignment.Center, numericWidth*2);
+                totalsTable.AddColumn(ParagraphAlignment.Center, numericWidth);
+                
                 foreach (TotalRow total in Invoice.Totals)
                 {
-                    BillingTotal(table, total);
+                    BillingTotal(totalsTable, total);
                 }
+
+                totalsTable.AddRow();
             }
-            table.AddRow();
         }
 
         private void BillingHeader(Table table)
@@ -245,13 +253,20 @@ namespace InvoiceSharp.Services.Impl
                 shading = MigraDocHelpers.BackColorFromHtml(Invoice.BackColor);
             }
 
-            Cell cell = row.Cells[Invoice.HasDiscount ? COLUMN_DISCOUNT : COLUMN_UNITPRICE];
+            var cell = row.Cells[2];
             cell.Shading.Color = shading;
             cell.AddParagraph(total.Name, ParagraphAlignment.Left, font);
 
-            cell = row.Cells[COLUMN_TOTAL];
+            cell = row.Cells[3];
             cell.Shading.Color = shading;
-            cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
+            if (!total.NegativeAmount)
+            {
+                cell.AddParagraph(total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
+            }
+            else
+            {
+                cell.AddParagraph("- " +total.Value.ToCurrency(Invoice.Currency), ParagraphAlignment.Right, font);
+            }
         }
 
         private void PaymentSection()
