@@ -58,17 +58,20 @@ namespace Invoicer2.Console
                 {
                     TotalRow.Make("Sous Total", (decimal) 631.99, true),
                     TotalRow.Make("Total TVA 20%", (decimal) 20.99, true),
-                    TotalRow.Make("Total TVA 10%", (decimal) 12.99, true),
+                    TotalRow.Make("Coupon NOMDECOUPONBEAUCOUP", (decimal) 20.99, true),
+                    TotalRow.Make("dont Total TVA Réduite (10%)", (decimal) 12.99, true, true),
+                    TotalRow.Make("dont Total TVA Livraison (10%)", (decimal) 12.99, true, true),
                     TotalRow.Make("Grand Total", (decimal) 800.99, true),
                 })
                 .Details(new List<DetailRow>
                 {
-                    DetailRow.Make("NOTES", "Payé par Stripe", "",
+                    DetailRow.Make("NOTES", "Payé par Stripe",
                         "N'hésitez pas à nous contacter pour toutes questions ou toutes nouvelles commandes",
-                        "", "Merci et à très vite !")
+                        "Merci et à très vite !")
                 })
                 .BillingDate(DateTime.Now)
-                .PayedDate(DateTime.Now);
+                .PayedDate(DateTime.Now)
+                .IsUnpaid(false);
 
             using (var stream = invoice.Get())
             {
@@ -84,7 +87,7 @@ namespace Invoicer2.Console
             List<ItemRow> list = new List<ItemRow>();
             for (int i = 0; i < 5; i++)
             {
-                list.Add(ItemRow.Make("Nexus 6", null, (decimal) 1, 20, (decimal) 166.66, (decimal) 199.99));
+                list.Add(ItemRow.Make("Parvifolia par 20 -------------------", null, (decimal) 1, 20, (decimal) 166.66, (decimal) 199.99));
             }
 
             return list;
