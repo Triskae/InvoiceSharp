@@ -53,6 +53,24 @@ namespace InvoiceSharp.Services
         IInvoicerOptions PayedDate(DateTime dueDate);
 
         /// <summary>
+        /// Set the payement status of the invoice.
+        /// </summary>
+        /// /// <param name="isUnpaid"></param>
+        IInvoicerOptions IsUnpaid(bool isUnpaid);
+        
+        /// <summary>
+        /// Set the payement status message for the invoice. Overrides the default message.
+        /// </summary>
+        /// /// <param name="message"></param>
+        IInvoicerOptions UnpaidMessage(string message);
+        
+        /// <summary>
+        /// Set the payement status message for the invoice. Overrides the default message.
+        /// </summary>
+        /// /// <param name="message"></param>
+        IInvoicerOptions PaidMessage(string message);
+
+        /// <summary>
         /// Set the company address
         /// </summary>
         IInvoicerOptions Company(Address address);

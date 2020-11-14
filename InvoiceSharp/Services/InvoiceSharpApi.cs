@@ -27,8 +27,10 @@ namespace InvoiceSharp.Services
             Invoice.PageOrientation = orientation;
             Invoice.Currency = currency;
             Invoice.InvoiceDate = DateTime.Now;
-            Invoice.PayedDate = Invoice.InvoiceDate.AddDays(14);
             Invoice.OrderReference = DefaultReference;
+            Invoice.IsUnpaid = false;
+            Invoice.UnpaidMessage = "à payer";
+            Invoice.PaidMessage = "payée";
         }
 
         public IInvoicerOptions BackColor(string color)
@@ -72,6 +74,24 @@ namespace InvoiceSharp.Services
         public IInvoicerOptions PayedDate(DateTime dueDate)
         {
             Invoice.PayedDate = dueDate;
+            return this;
+        }
+        
+        public IInvoicerOptions IsUnpaid(bool isUnpaind)
+        {
+            Invoice.IsUnpaid = isUnpaind;
+            return this;
+        }
+
+        public IInvoicerOptions UnpaidMessage(string message)
+        {
+            Invoice.UnpaidMessage = message;
+            return this;
+        }
+
+        public IInvoicerOptions PaidMessage(string message)
+        {
+            Invoice.PaidMessage = message;
             return this;
         }
 

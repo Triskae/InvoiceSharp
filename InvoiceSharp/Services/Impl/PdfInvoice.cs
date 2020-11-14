@@ -3,7 +3,6 @@ using MigraDoc.Rendering;
 using PdfSharp.Pdf.Security;
 using System;
 using System.IO;
-using System.Linq;
 using InvoiceSharp.Helpers;
 using InvoiceSharp.Models;
 
@@ -162,6 +161,12 @@ namespace InvoiceSharp.Services.Impl
             style = Pdf.Styles.AddStyle("H1-20", "Normal");
             style.Font.Size = 20;
             style.Font.Bold = true;
+            
+            style = Pdf.Styles.AddStyle("H1-20-Red", "H1-20");
+            style.Font.Color = Colors.Red;
+            
+            style = Pdf.Styles.AddStyle("H1-20-Green", "H1-20");
+            style.Font.Color = Colors.Green;
 
             style = Pdf.Styles.AddStyle("H2-8", "Normal");
             style.Font.Size = 8;
@@ -189,6 +194,9 @@ namespace InvoiceSharp.Services.Impl
 
             style = Pdf.Styles.AddStyle("H2-10", "Normal");
             style.Font.Size = 10;
+            
+            style = Pdf.Styles.AddStyle("H2-10-Red", "H2-10");
+            style.Font.Color = Colors.Red;
 
             style = Pdf.Styles.AddStyle("H2-10B", "H2-10");
             style.Font.Bold = true;

@@ -27,6 +27,9 @@ namespace InvoiceSharp.Models
         public string Footer { get; set; }
         public List<ItemRow> Items { get; set; }
         public List<TotalRow> Totals { get; set; }
+        public bool IsUnpaid { get; set; }
+        public string UnpaidMessage { get; set; }
+        public string PaidMessage { get; set; }
 
         /// <summary>
         /// Do any of the items have a discount specified. If there are no discounts then

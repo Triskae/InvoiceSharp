@@ -2,7 +2,6 @@
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
 using System;
-using System.Linq;
 using InvoiceSharp.Helpers;
 using InvoiceSharp.Models;
 
@@ -49,8 +48,12 @@ namespace InvoiceSharp.Services.Impl
             }
             row.Cells[0].AddParagraph("EDITÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");
             row.Cells[1].AddParagraph(Invoice.InvoiceDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
-            row.Cells[0].AddParagraph("PAYÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");
-            row.Cells[1].AddParagraph(Invoice.PayedDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
+            
+            if (Invoice.PayedDate != DateTime.MinValue)
+            {
+                row.Cells[0].AddParagraph("PAYÉE LE:", ParagraphAlignment.Left, "H2-9B-Color");
+                row.Cells[1].AddParagraph(Invoice.PayedDate.ToString("dd/MM/yyyy"), ParagraphAlignment.Right, "H2-9");
+            }
         }
 
         public void FooterSection()
@@ -292,6 +295,16 @@ namespace InvoiceSharp.Services.Impl
                         name.AddFormattedText(line, "H2-9-Grey");
                     }
                 }
+            }
+            if (Invoice.IsUnpaid)
+            {
+                Paragraph name = row.Cells[0].AddParagraph("", ParagraphAlignment.Center, "H1-20-Red");
+                name.AddFormattedText(Invoice.UnpaidMessage.ToUpper(), "H1-20-Red");
+            }
+            else
+            {
+                Paragraph name = row.Cells[0].AddParagraph("", ParagraphAlignment.Center, "H1-20-Green");
+                name.AddFormattedText(Invoice.PaidMessage.ToUpper(), "H1-20-Green");
             }
         }
     }
